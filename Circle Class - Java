@@ -1,0 +1,120 @@
+public class Circle {
+    private double r;
+    private double x;
+    private double y;
+
+    // CONSTRUCTORS
+    public Circle(double x, double y, double r) {
+        this.x = x;
+        this.y = y;
+        if (r < 0) {
+            this.r = -1 * r;
+        } else {
+            this.r = r;
+        }
+    }
+
+    public Circle() {
+        this.x = 0;
+        this.y = 0;
+        this.r = 1;
+    }
+
+    public Circle(Circle other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.r = other.r;
+    }
+
+    // MUTATORS
+    public void setR(double r) {
+        this.r = r;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setAll(double x, double y, double r) {
+        this.x = x;
+        this.y = y;
+        if (r < 0) {
+            this.r = -1 * r;
+        } else {
+            this.r = r;
+        }
+    }
+
+    // ACCESSORS
+    public double getR() {
+        return r;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public String toString(){
+        return "Circle: centre at ("+x+", "+y+") and radius "+r;
+    }
+
+    // CLASS METHODS
+    public static void printEquation(Circle c){
+        if (c.getX() >= 0){
+            System.out.print("(x - " + c.getX() + ")² ");
+        }
+        else{
+            System.out.print("(x + " + -1*c.getX() + ")² ");
+        }
+
+        if (c.getY() >= 0){
+            System.out.println("+ (y - " + c.getY() + ")² = " + c.getR()*c.getR());
+        }
+        else{
+            System.out.println("+ (y + " + -1*c.getY() + ")² = " + c.getR()*c.getR());
+        }
+    }
+
+    // INSTANCE METHODS
+    public double area(){
+        return r*r*Math.PI;
+    }
+    public double circumference(){
+        return 2*r*Math.PI;
+    }
+    public double diameter(){
+        return 2*r;
+    }
+    public Circle smaller(Circle c){
+        // area is proportional to r² so the area method does not need to be called
+        if (this.r <= c.r){
+            return this;
+        }
+        return c;
+    }
+    public double distance(Circle c){
+        double difX = Math.abs(this.x - c.x);
+        double difY = Math.abs(this.y - c.y);
+        return Math.pow(difX*difX+difY*difY, 0.5);
+    }
+    public boolean isInside(Circle c){
+        if(this.r > c.r){
+            return this.r >= this.distance(c) + c.r;
+        }
+        else{
+            return c.r >= this.distance(c) + this.r;
+        }
+    }
+    public boolean equals(Circle c){
+        return this.r == c.r && this.x == c.x && this.y == c.y;
+    }
+}
